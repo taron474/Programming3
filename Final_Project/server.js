@@ -2,8 +2,9 @@
 var Grass = require("./modules/Grass.js");
 var GrassEater = require("./modules/GrassEater.js");
 var Predator = require("./modules/Predator.js");
-var Person1 = require("./modules/Person1.js.js");
+var Person1 = require("./modules/Person1.js");
 var Person2 = require("./modules/Person2.js");
+var Amenaker = require("./modules/Amenaker.js");
 let random = require('./modules/random');
 //! Requiring modules  --  END
 
@@ -13,6 +14,7 @@ eatArr = [];
 predatorArr = [];
 person1Arr = [];
 person2Arr = [];
+amenakerArr = [];
 matrix = [];
 //! Initializing global arrays  --  END
 
@@ -22,12 +24,13 @@ eatHashiv = 0;
 predatorHashiv = 0;
 person1Hashiv = 0;
 person2Hashiv = 0;
+amenakerHashiv = 0;
 // statistics end
 
 // time = 0
 //! Creating MATRIX -- START
 
-function matrixGenerator(matrixSize, grass, eat, predator, person1, person2) {
+function matrixGenerator(matrixSize, grass, grassEater, predator, person1, person2, amenaker) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -35,32 +38,42 @@ function matrixGenerator(matrixSize, grass, eat, predator, person1, person2) {
         }
     }
     for (let i = 0; i < grass; i++) {
-        let customX = Math.floor(random(matrixSize));
-        let customY = Math.floor(random(matrixSize));
+        let customX = Math.floor(random(0, matrixSize)); // 0 - 49
+        let customY = Math.floor(random(0, matrixSize));
         matrix[customY][customX] = 1;
     }
-    for (let i = 0; i < eat; i++) {
-        let customX = Math.floor(random(matrixSize));
-        let customY = Math.floor(random(matrixSize));
+    for (let i = 0; i < grassEater; i++) {
+        let customX = Math.floor(random(0, matrixSize));
+        let customY = Math.floor(random(0, matrixSize));
         matrix[customY][customX] = 2;
     }
+
     for (let i = 0; i < predator; i++) {
-        let customX = Math.floor(random(matrixSize));
-        let customY = Math.floor(random(matrixSize));
+        let customX = Math.floor(random(0, matrixSize));
+        let customY = Math.floor(random(0, matrixSize));
         matrix[customY][customX] = 3;
     }
+
     for (let i = 0; i < person1; i++) {
-        let customX = Math.floor(random(matrixSize));
-        let customY = Math.floor(random(matrixSize));
+        let customX = Math.floor(random(0, matrixSize));
+        let customY = Math.floor(random(0, matrixSize));
         matrix[customY][customX] = 4;
     }
+
     for (let i = 0; i < person2; i++) {
-        let customX = Math.floor(random(matrixSize));
-        let customY = Math.floor(random(matrixSize));
+        let customX = Math.floor(random(0, matrixSize));
+        let customY = Math.floor(random(0, matrixSize));
         matrix[customY][customX] = 5;
     }
+
+    for (let i = 0; i < amenaker; i++) {
+        let customX = Math.floor(random(0, matrixSize));
+        let customY = Math.floor(random(0, matrixSize));
+        matrix[customY][customX] = 6;
+    }
 }
-matrixGenerator(20, 25, 20, 15, 10, 2);
+    
+matrixGenerator(30, 150, 100, 60, 15, 5, 5);
 //! Creating MATRIX -- END
 
 //! SERVER STUFF  --  START
@@ -89,18 +102,23 @@ function creatingObjects() {
             }
             else if (matrix[y][x] == 3) {
                 var predator = new Predator(x, y);
-                Arr.push(hunt);
-                huntHashiv++
+                predatorArr.push(predator);
+                predatorHashiv++
             }
             else if (matrix[y][x] == 4) {
-                var term = new Terminator(x, y);
-                termArr.push(term);
-                termHashiv++
+                var person1 = new Person1(x, y);
+                person1Arr.push(person1);
+                person1Hashiv++
             }
             else if (matrix[y][x] == 5) {
-                var titan = new Titan(x, y);
-                titanArr.push(titan);
-                titanHashiv++
+                var person2 = new Person2(x, y);
+                person2Arr.push(person2);
+                person2Hashiv++
+            }
+            else if (matrix[y][x] == 6) {
+                var amenaker = new Amenaker(x, y);
+                amenakerArr.push(amenaker);
+                amenakerHashiv++
             }
         }
     }
@@ -114,14 +132,21 @@ let weather = "winter"
 function game() {
 
     exanak++;
-    if (exanak <= 10){
+    if (exanak >= 20){
         weather = "summer"
-    }else if (exanak <= 20){
+    }
+    else if (exanak < 20 && > 10){
         weather = "autumn"
-    }else if (exanak > 20){
+    }
+    else if (exanak < 10 && > 5 ){
+        weather = "spring"
+    }
+    else if (exanak < 5 ){
+        weather = "winter"
+    }
+    else if (exanak > 25 ){
         exanak = 0
     }
-
 
     if (grassArr[0] !== undefined) {
         for (var i in grassArr) {
@@ -133,19 +158,19 @@ function game() {
             eatArr[i].eat();
         }
     }
-    if (huntArr[0] !== undefined) {
-        for (var i in huntArr) {
-            huntArr[i].eat();
+    if (predatorArr[0] !== undefined) {
+        for (var i in predatorArr) {
+            predatorArr[i].eat();
         }
     }
-    if (termArr[0] !== undefined) {
-        for (var i in termArr) {
-            termArr[i].eat();
+    if (person1Arr[0] !== undefined) {
+        for (var i in person1Arr) {
+            person1Arr[i].eat();
         }
     }
-    if (titanArr[0] !== undefined) {
-        for (var i in titanArr) {
-            titanArr[i].eat();
+    if (person2Arr[0] !== undefined) {
+        for (var i in person2Arr) {
+            person2Arr[i].eat();
         }
     }
 
@@ -155,9 +180,10 @@ function game() {
         grassCounter: grassHashiv,
         grassLiveCounter: grassArr.length,
         eatCounter: eatHashiv,
-        huntCounter: huntHashiv,
-        termCounter: termHashiv,
-        titanCounter: titanHashiv,
+        predatorCounter: predatorHashiv,
+        person1Counter: person1Hashiv,
+        person2Counter: person2Hashiv,
+        amenakerCounter: amenakerHashiv,
         weather: weather
     }
 
