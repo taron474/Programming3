@@ -6,7 +6,7 @@ var random = require("./random.js");
 module.exports = class Amenaker extends LiveForm {
     constructor(x, y) {
         super(x, y);
-        this.life = 50;
+        this.energy = 50;
     }
     getNewCoordinates() {
         this.directions = [
@@ -45,8 +45,11 @@ mul() {
     }
 }
 eat() {
-    let emptyCells = this.chooseCell(2);
-    let newCell = random(emptyCells);
+    let emptyCells1 = this.chooseCell(1);
+    let emptyCells2 = this.chooseCell(2);
+    let emptyCells3 = this.chooseCell(3);
+    let emptyCells4 = this.chooseCell(4);
+    let newCell = random(emptyCells1.concat(emptyCells2.concat(emptyCells3.concat(emptyCells4))));
 
     if (newCell) {
         this.energy++;
@@ -57,7 +60,7 @@ eat() {
         matrix[this.y][this.x] = 0;
 
         for (let i in grassArr) {
-            if (grasSArr[i].x == x && grassArr[i].y == y) {
+            if (grassArr[i].x == x && grassArr[i].y == y) {
                 grassArr.splice(i, 1)
             }
         }
@@ -76,11 +79,7 @@ eat() {
                 person1Arr.splice(i, 1)
             }
         }
-        for (let i in person2Arr) {
-            if (person2Arr[i].x == x && person2Arr[i].y == y) {
-                person2Arr.splice(i, 1)
-            }
-        }
+     
     
 
 

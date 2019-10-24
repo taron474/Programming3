@@ -10,7 +10,7 @@ let random = require('./modules/random');
 
 //! Initializing global arrays  --  START
 grassArr = [];
-eatArr = [];
+grassEaterArr = [];
 predatorArr = [];
 person1Arr = [];
 person2Arr = [];
@@ -20,7 +20,7 @@ matrix = [];
 
 // statistics start
 grassHashiv = 0;
-eatHashiv = 0;
+grassEaterHashiv = 0;
 predatorHashiv = 0;
 person1Hashiv = 0;
 person2Hashiv = 0;
@@ -38,37 +38,37 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, person1, perso
         }
     }
     for (let i = 0; i < grass; i++) {
-        let customX = Math.floor(random(0, matrixSize)); // 0 - 49
-        let customY = Math.floor(random(0, matrixSize));
+        let customX = Math.floor(random(matrixSize)); // 0 - 49
+        let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 1;
     }
     for (let i = 0; i < grassEater; i++) {
-        let customX = Math.floor(random(0, matrixSize));
-        let customY = Math.floor(random(0, matrixSize));
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 2;
     }
 
     for (let i = 0; i < predator; i++) {
-        let customX = Math.floor(random(0, matrixSize));
-        let customY = Math.floor(random(0, matrixSize));
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 3;
     }
 
     for (let i = 0; i < person1; i++) {
-        let customX = Math.floor(random(0, matrixSize));
-        let customY = Math.floor(random(0, matrixSize));
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
 
     for (let i = 0; i < person2; i++) {
-        let customX = Math.floor(random(0, matrixSize));
-        let customY = Math.floor(random(0, matrixSize));
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
 
     for (let i = 0; i < amenaker; i++) {
-        let customX = Math.floor(random(0, matrixSize));
-        let customY = Math.floor(random(0, matrixSize));
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 6;
     }
 }
@@ -93,8 +93,8 @@ function creatingObjects() {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 2) {
                 var grassEater = new GrassEater(x, y);
-                eatArr.push(grassEater);
-                eatHashiv++;
+                grassEaterArr.push(grassEater);
+                grassEaterHashiv++;
             } else if (matrix[y][x] == 1) {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
@@ -132,19 +132,19 @@ let weather = "winter"
 function game() {
 
     exanak++;
-    if (exanak >= 20){
+    if (exanak <= 5){
         weather = "summer"
     }
-    else if (exanak < 20 && > 10){
+    else if (exanak <= 10){
         weather = "autumn"
     }
-    else if (exanak < 10 && > 5 ){
+    else if (exanak <= 15){
         weather = "spring"
     }
-    else if (exanak < 5 ){
+    else if (exanak <= 20){
         weather = "winter"
     }
-    else if (exanak > 25 ){
+    else if (exanak > 20 ){
         exanak = 0
     }
 
@@ -153,9 +153,9 @@ function game() {
             grassArr[i].mul();
         }
     }
-    if (eatArr[0] !== undefined) {
-        for (var i in eatArr) {
-            eatArr[i].eat();
+    if (grassEaterArr[0] !== undefined) {
+        for (var i in grassEaterArr) {
+            grassEaterArr[i].eat();
         }
     }
     if (predatorArr[0] !== undefined) {
@@ -173,17 +173,27 @@ function game() {
             person2Arr[i].eat();
         }
     }
+    if (amenakerArr[0] !== undefined) {
+        for (var i in amenakerArr) {
+            amenakerArr[i].eat();
+        }
+    }
 
     //! Object to send
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
         grassLiveCounter: grassArr.length,
-        eatCounter: eatHashiv,
+        grassEaterCounter: grassEaterHashiv,
+        grassEaterLiveCounter: grassEaterArr.length,
         predatorCounter: predatorHashiv,
+        predatorLiveCounter: predatorArr.length,
         person1Counter: person1Hashiv,
+        person1LiveCounter: person1Arr.length,
         person2Counter: person2Hashiv,
+        person2LiveCounter: person2Arr.length,
         amenakerCounter: amenakerHashiv,
+        amenakerLiveCounter: amenakerArr.length,
         weather: weather
     }
 

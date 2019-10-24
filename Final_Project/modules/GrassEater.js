@@ -37,7 +37,7 @@ mul() {
     let newCell = random(emptyCells);
 
     if (newCell) {
-        eatHashiv++;
+        grassEaterHashiv++;
         let x = newCell[0];
         let y = newCell[1];
 

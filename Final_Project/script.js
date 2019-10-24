@@ -9,7 +9,17 @@ function setup() {
 
     //! Getting DOM objects (HTML elements)
     let grassCountElement = document.getElementById('grassCount');
+    let grassLiveCountElement = document.getElementById('grassLiveCount');
     let grassEaterCountElement = document.getElementById('grassEaterCount');
+    let grassEaterLiveCountElement = document.getElementById('grassEaterLiveCount');
+    let predatorCountElement = document.getElementById('predatorCount');
+    let predatorLiveCountElement = document.getElementById('predatorLiveCount');
+    let person1CountElement = document.getElementById('person1Count');
+    let person1LiveCountElement = document.getElementById('person1LiveCount');
+    let person2CountElement = document.getElementById('person2Count');
+    let person2LiveCountElement = document.getElementById('person2LiveCount');
+    let amenakerCountElement = document.getElementById('amenakerCount');
+    let amenakerLiveCountElement = document.getElementById('amenakerLiveCount');
 
     //! adding socket listener on "data" <-- name, after that fire 'drawCreatures' function 
 
@@ -19,6 +29,18 @@ function setup() {
         //! after getting data pass it to matrix variable
         matrix = data.matrix;
         grassCountElement.innerText = data.grassCounter;
+        grassLiveCountElement.innerText = data.grassLiveCounter;
+        grassEaterCountElement.innerText = data.grassEaterCounter;
+        grassEaterLiveCountElement.innerText = data.grassEaterLiveCounter;
+        predatorCountElement.innerText = data.predatorCounter;
+        predatorLiveCountElement.innerText = data.predatorLiveCounter;
+        person1CountElement.innerText = data.person1Counter;
+        person1LiveCountElement.innerText = data.person1LiveCounter;
+        person2CountElement.innerText = data.person2Counter;
+        person2LiveCountElement.innerText = data.person2LiveCounter;
+        amenakerCountElement.innerText = data.amenakerCounter;
+        amenakerLiveCountElement.innerText = data.amenakerLiveCounter;
+        
         //! Every time it creates new Canvas woth new matrix size
         createCanvas(matrix[0].length * side, matrix.length * side)
         //! clearing background by setting it to new grey color
@@ -29,7 +51,18 @@ function setup() {
             for (var y = 0; y < matrix.length; y++) {
                 for (var x = 0; x < matrix[y].length; x++) {
                     if (matrix[y][x] == 1) {
-                        fill("green");
+                        if(data.weather == "summer"){
+                            fill("#acacac");
+                        }
+                        if(data.weather == "automn"){
+                            fill("#acacac");
+                        }
+                        if(data.weather == "winter"){
+                            fill("#acacac");
+                        }
+                        if(data.weather == "spring"){
+                            fill("#acacac");
+                        }    
                     }
                     else if (matrix[y][x] == 0) {
                         fill("#acacac");
