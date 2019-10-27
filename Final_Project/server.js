@@ -73,7 +73,7 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, person1, perso
     }
 }
     
-matrixGenerator(30, 150, 100, 60, 15, 5, 5);
+matrixGenerator(30, 400, 100, 60, 20, 5, 5);
 //! Creating MATRIX -- END
 
 //! SERVER STUFF  --  START
@@ -184,16 +184,22 @@ function game() {
         matrix: matrix,
         grassCounter: grassHashiv,
         grassLiveCounter: grassArr.length,
+
         grassEaterCounter: grassEaterHashiv,
         grassEaterLiveCounter: grassEaterArr.length,
+
         predatorCounter: predatorHashiv,
         predatorLiveCounter: predatorArr.length,
+
         person1Counter: person1Hashiv,
         person1LiveCounter: person1Arr.length,
+
         person2Counter: person2Hashiv,
         person2LiveCounter: person2Arr.length,
+
         amenakerCounter: amenakerHashiv,
         amenakerLiveCounter: amenakerArr.length,
+
         weather: weather
     }
 
@@ -203,4 +209,4 @@ function game() {
 
 
 
-setInterval(game, 1000)
+setInterval(game, 500)
